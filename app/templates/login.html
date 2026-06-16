@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Quiz Mock Application{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static',filename='css/login.css')}}" 
+    rel="stylesheet" type="text/css" defer />
+{% endblock %}
+
+{% block content %}
+    <div class="login-container">
+         <!--Start of Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <h2>Login to Your Account</h2>
+        <!--End of Flash Messages-->
+        
+        <!-- Login Form -->
+        <form method="POST" action="{{ url_for('index.login') }}" autocomplete="off">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="email" name="email" required placeholder="Enter your Email or Username" autocomplete="off">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+            
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="footer">
+            <p>Don't have an account? <a href="{{ url_for('index.signup') }}">Sign up</a></p>
+        </div>
+    </div>
+{% endblock %}

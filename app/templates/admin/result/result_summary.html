@@ -1,0 +1,55 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}User Quiz Scores{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center text-primary">User-Wise Quiz Scores</h2>
+
+    <!--<button class="btn btn-danger mb-3" onclick="printPDF()">Print to PDF</button>-->
+
+    {% if results %}
+    <div id="resultsTable">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>User Name</th>
+                    <th>Quiz Name</th>
+                    <th>Total Questions</th>
+                    <th>Marks Scored</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ result.user_name }}</td>
+                    <td>{{ result.quiz_name }}</td>
+                    <td>{{ result.total_questions }}</td>
+                    <td><strong>{{ result.scored_mark }}</strong> / {{ result.total_questions }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-muted text-center mt-4">No quiz scores available.</p>
+    {% endif %}
+</div>
+
+<!-- JavaScript to Print the Table as PDF -->
+<script>
+    function printPDF() {
+        let content = document.getElementById("resultsTable").innerHTML;
+        let newWindow = window.open('', '', 'width=800, height=600');
+        newWindow.document.write('<html><head><title>Quiz Scores</title>');
+        newWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid black; padding: 8px; text-align: left; }</style></head><body>');
+        newWindow.document.write('<h2>User-Wise Quiz Scores</h2>');
+        newWindow.document.write(content);
+        newWindow.document.write('</body></html>');
+        newWindow.document.close();
+        newWindow.print();
+    }
+</script>
+{% endblock %}

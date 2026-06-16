@@ -1,0 +1,101 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Quizzes - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Quizzes List</h2>
+        <a href="{{ url_for('admin.admin_quiz_add') }}" class="btn btn-success">+ Add New Quiz</a>
+    </div>
+
+    <!-- Start of Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- End of Flash Messages -->
+
+    <!-- Filter & Search -->
+    <div class="row my-3">
+        <div class="col-md-6">
+            <select id="chapterFilter" class="form-select" onchange="filterQuizzes()">
+                <option value="">All Chapters</option>
+                {% for chapter in chapters %}
+                    <option value="{{ chapter.id }}">{{ chapter.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="searchBox" class="form-control" placeholder="Search quizzes..." onkeyup="searchQuizzes()">
+        </div>
+    </div>
+
+    <!-- Quizzes Table -->
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Quiz Name</th>
+                <th>Description</th>
+                <th>Chapter</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quiz in quizzes %}
+            <tr data-chapter-id="{{ quiz.chapter_id }}">
+                <td>{{ quiz.id }}</td>
+                <td>{{ quiz.name }}</td>
+                <td>{{ quiz.description }}</td>
+                <td>
+                    {% for chapter in chapters %}
+                        {% if chapter.id == quiz.chapter_id %}
+                            {{ chapter.name }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ quiz.start_date }}</td>
+                <td>{{ quiz.end_date }}</td>
+                <td>
+                    <span class="badge bg-{% if quiz.status == 'active' %}success{% else %}danger{% endif %}">
+                        {{ quiz.status | capitalize }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.admin_quiz_edit', quiz_id=quiz.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('admin.admin_quiz_delete', quiz_id=quiz.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function searchQuizzes() {
+        let input = document.getElementById("searchBox").value.toLowerCase();
+        let rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            let name = row.cells[1].textContent.toLowerCase();
+            row.style.display = name.includes(input) ? "" : "none";
+        });
+    }
+
+    function filterQuizzes() {
+        let selectedChapter = document.getElementById("chapterFilter").value;
+        let rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            let chapterID = row.getAttribute("data-chapter-id");
+            row.style.display = (selectedChapter === "" || chapterID === selectedChapter) ? "" : "none";
+        });
+    }
+</script>
+
+{% endblock %}

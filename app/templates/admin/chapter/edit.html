@@ -1,0 +1,48 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit Chapter - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="text-center mb-0">Edit Chapter</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Start of Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <!-- End of Flash Messages -->
+                    <form action="{{ url_for('admin.admin_chapter_edit', chapter_id=chapter.id) }}" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Chapter Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required value="{{ chapter.name }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" required>{{ chapter.description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject_id" class="form-label">Subject</label>
+                            <select class="form-select" id="subject_id" name="subject_id">
+                                <option value="">Select Subject</option>
+                                {% for subject in subjects %}
+                                    <option value="{{ subject.id }}" {% if subject.id == chapter.subject_id %}selected{% endif %}>{{ subject.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Update Chapter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

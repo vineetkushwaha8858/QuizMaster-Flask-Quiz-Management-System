@@ -1,0 +1,17 @@
+{% extends 'user/base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+
+<!--Start of Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+<!--End of Flash Messages-->
+{% endblock %}
+

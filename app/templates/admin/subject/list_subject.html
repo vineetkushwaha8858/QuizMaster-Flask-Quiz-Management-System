@@ -1,0 +1,76 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Subjects - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Subjects List</h2>
+        <a href="{{ url_for('admin.admin_subject_add_form') }}" class="btn btn-success">Add New Subject</a>
+    </div>
+
+     <!-- Flash Messages start block -->
+     {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+         {% for category, message in messages %}
+             <div class="alert alert-{{ category }}">{{ message }}</div>
+         {% endfor %}
+     {% endif %}
+ {% endwith %}
+ <!-- Flash Messages End Block -->
+    <!-- Search Filter -->
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by Name or Description..." onkeyup="filterSubjects()">
+    </div>
+
+    <table class="table table-bordered table-striped" id="subjectsTable">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.description }}</td>
+                <td>
+                    <span class="badge bg-{% if subject.difficulty_level == 'easy' %}success{% elif subject.difficulty_level == 'medium' %}warning{% else %}danger{% endif %}">
+                        {{ subject.difficulty_level | capitalize }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.admin_subject_edit', subject_id=subject.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('admin.admin_subject_delete', subject_id=subject.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- JavaScript for Filtering -->
+<script>
+    function filterSubjects() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let rows = document.querySelectorAll("#subjectsTable tbody tr");
+
+        rows.forEach(row => {
+            let name = row.cells[1].textContent.toLowerCase();
+            let description = row.cells[2].textContent.toLowerCase();
+
+            if (name.includes(input) || description.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+</script>
+
+{% endblock %}

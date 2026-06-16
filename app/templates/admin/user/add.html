@@ -1,0 +1,54 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Add User - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="text-center mb-0">Create New User</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Start of Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <!-- End of Flash Messages -->
+
+                    <!-- Create of User form -->
+                    <form action="{{ url_for('admin.admin_create_user_form') }}" method="POST">
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" required placeholder="Enter full name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="Enter email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required placeholder="Enter password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="qualification" class="form-label">Qualification</label>
+                            <input type="text" class="form-control" id="qualification" name="qualification" required placeholder="Enter qualification">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dob" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob" name="dob" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add User</button>
+                    </form>
+                    <!-- End of Create the User form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

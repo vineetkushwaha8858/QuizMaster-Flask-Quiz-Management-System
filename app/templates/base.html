@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quiz Mock Application{% endblock %}</title>
+
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block styles %}
+    <!-- Dynamic Styles Sheets will be added Dynamically from Pages -->
+    {% endblock %}
+
+    <!-- Link to JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <!-- Header (Common for all pages) -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index.home') }}">Home</a></li>
+                <li><a href="{{ url_for('index.about') }}">About</a></li>
+                <li><a href="{{ url_for('index.login') }}">Login</a></li>
+                <li><a href="{{ url_for('index.signup') }}">Sign up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main content block (to be filled by child templates) -->
+    <main>
+        {% block content %}
+        <!-- Default content (optional) -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer (Common for all pages) -->
+    <footer>
+        <p>&copy; 2025 Quiz Mock Application</p>
+    </footer>
+{% block scripts %}
+    <!-- Dynamic Scripts will be added Dynamically from Pages -->
+{% endblock %}
+</body>
+</html>

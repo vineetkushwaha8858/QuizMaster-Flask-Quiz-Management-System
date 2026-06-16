@@ -1,0 +1,54 @@
+/* General body and layout settings */
+body {
+    background-color: #f0f0f0; /* Light gray background */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply the layout color to header, footer, and navigation */
+header {
+    background-color: #1a67a3; /* Layout color */
+    color: white;  /* Ensure text is readable */
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    background-color: #1a67a3; /* Layout color */
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Styling for navigation */
+nav {
+    background-color: #1a67a3; /* Layout color */
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Add any other custom styles for content */
+main {
+    padding: 20px;
+    min-height: 350px !important;
+}

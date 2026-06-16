@@ -1,0 +1,77 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ 'Edit Quiz' if quiz else 'Add Quiz' }} - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="text-center mb-0">{{ 'Edit Quiz' if quiz else 'Create New Quiz' }}</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Start of Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <!-- End of Flash Messages -->
+
+                    <!-- Quiz Form -->
+                    <form action="{{ url_for('admin.admin_quiz_edit', quiz_id=quiz.id) if quiz else url_for('admin.admin_quiz_add') }}" method="POST">
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Quiz Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required value="{{ quiz.name if quiz else '' }}" placeholder="Enter quiz name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" required>{{ quiz.description if quiz else '' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="chapter" class="form-label">Chapter</label>
+                            <select class="form-select" id="chapter" name="chapter_id" required>
+                                <option value="">Select Chapter</option>
+                                {% for chapter in chapters %}
+                                    <option value="{{ chapter.id }}" {% if quiz and quiz.chapter_id == chapter.id %}selected{% endif %}>
+                                        {{ chapter.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ quiz.start_date if quiz else '' }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ quiz.end_date if quiz else '' }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="active" {% if quiz and quiz.status == 'active' %}selected{% endif %}>Active</option>
+                                <option value="inactive" {% if quiz and quiz.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="time_duration" class="form-label">Time Duration (in minutes)</label>
+                            <input type="number" class="form-control" id="time_duration" name="time_duration" value="{{ quiz.time_duration if quiz else '' }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="remarks" class="form-label">Remarks</label>
+                            <textarea class="form-control" id="remarks" name="remarks">{{ quiz.remarks if quiz else '' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">{{ 'Update Quiz' if quiz else 'Create Quiz' }}</button>
+                    </form>
+                    <!-- End of Quiz Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

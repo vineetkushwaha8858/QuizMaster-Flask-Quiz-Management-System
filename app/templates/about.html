@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Quiz Mock Application{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static',filename='css/about.css')}}" 
+    rel="stylesheet" type="text/css" defer />
+{% endblock %}
+
+{% block content %}
+    <div class="about-container">
+        <h2>About Us</h2>
+        
+        <p>
+            Welcome to the **Quiz Mock Application**! This web app is designed to help students prepare for their exams by providing them with mock quizzes on various topics. Whether you're preparing for competitive exams, school tests, or simply looking to improve your knowledge, this app offers a convenient platform to test your skills.
+        </p>
+
+        <h3>Features:</h3>
+        <ul>
+            <li>Wide range of subjects and topics</li>
+            <li>Timed quizzes to simulate real exam conditions</li>
+            <li>Instant feedback on performance</li>
+            <li>Track progress and improvement over time</li>
+            <li>User-friendly interface for easy navigation</li>
+        </ul>
+
+        <h3>Open Source License</h3>
+        <p>
+            The **Quiz Mock Application** is an open-source project licensed under the **MIT License**. You can freely use, modify, and distribute this software in accordance with the terms of the license.
+        </p>
+        
+        <h4>MIT License Declaration:</h4>
+        <pre>
+            Copyright (c) 2025 [{{data['name']}}/{{data['organisation']}}]
+            
+            Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            provided to do so, subject to the following conditions:
+            
+            The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.
+            
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+        </pre>
+        
+        <h3>Contact Us</h3>
+        <p>
+            If you have any questions, feedback, or suggestions, feel free to reach out to us at <a href="mailto:support@abc.com">support@abc.com</a>.
+        </p>
+    </div>
+{% endblock %}

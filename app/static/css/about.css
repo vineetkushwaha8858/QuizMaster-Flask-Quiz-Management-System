@@ -1,0 +1,103 @@
+/* General body and layout settings */
+body {
+    background-color: #f0f0f0; /* Light gray background */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    background-color: #1a67a3; /* Layout color */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer {
+    font-size: 14px;
+}
+
+footer a {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Styling for the About Us page */
+.about-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-container h2 {
+    text-align: center;
+    color: #1a67a3;
+    font-size: 32px;
+}
+
+.about-container p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.about-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-container ul li {
+    font-size: 16px;
+    color: #333;
+    padding: 5px 0;
+}
+
+.about-container h3 {
+    color: #1a67a3;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.about-container h4 {
+    font-size: 18px;
+    color: #1a67a3;
+    margin-top: 20px;
+}
+
+.about-container pre {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    white-space: pre-wrap; /* Allows long lines to wrap */
+    word-wrap: break-word;
+}
+
+.about-container a {
+    color: #1a67a3;
+    text-decoration: none;
+}
+
+.about-container a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,61 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<!--Start of Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+<!--End of Flash Messages-->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white text-center p-3">
+                <h4>Total Users</h4>
+                <h2>{{ user_count if user_count else 0 }}</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white text-center p-3">
+                <h4>Total Subjects</h4>
+                <h2>{{ subject_count if subject_count else 0 }}</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white text-center p-3">
+                <h4>Total Chapters</h4>
+                <h2>{{ chapter_count if chapter_count else 0 }}</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white text-center p-3">
+                <h4>Total Quizzes</h4>
+                <h2>{{ quiz_count if quiz_count else 0  }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-secondary text-white text-center p-3">
+                <h4>Total Questions</h4>
+                <h2>{{ question_count if question_count else 0 }}</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white text-center p-3">
+                <h4>Question Attempted</h4>
+                <h2>{{ attempted_count if attempted_count else 0 }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,146 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Questions - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Questions List</h2>
+        <a href="{{ url_for('admin.admin_question_add') }}" class="btn btn-success">+ Add New Question</a>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- Filter & Search -->
+    <div class="row my-3">
+        <div class="col-md-6">
+            <select id="quizFilter" class="form-select" onchange="filterQuestions()">
+                <option value="">All Quizzes</option>
+                {% for quiz in quizzes %}
+                    <option value="{{ quiz.id }}">{{ quiz.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="searchBox" class="form-control" placeholder="Search questions..." onkeyup="searchQuestions()">
+        </div>
+    </div>
+
+    <!-- Questions Table -->
+    <table id="questionsTable" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Quiz</th>
+                <th>Question</th>
+                <th>Options</th>
+                <th>Correct Answer</th>
+                <th>Marks (Correct / Wrong)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr data-quiz-id="{{ question.quiz_id }}">
+                <td>{{ question.id }}</td>
+                <td>
+                    {% for quiz in quizzes %}
+                        {% if quiz.id == question.quiz_id %}
+                            {{ quiz.name }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ question.question }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            {% if question.correct_option == 1 %}
+                              A) <span class="text text-primary text-bold" style="font-weight: bolder;">{{ question.option_1 }}</span>
+                            {% else %}
+                             A) {{ question.option_1 }}
+                            {% endif %}
+                          </li>
+                          <li>
+                            {% if question.correct_option == 2 %}
+                              B) <span class="text text-primary text-bold" style="font-weight: bolder;">{{ question.option_2 }}</span>
+                            {% else %}
+                              B) {{ question.option_2 }}
+                            {% endif %}
+                          </li>
+                          <li>
+                            {% if question.correct_option == 3 %}
+                              C) <span class="text text-primary text-bold" style="font-weight: bolder;">{{ question.option_3 }}</span>
+                            {% else %}
+                              C) {{ question.option_3 }}
+                            {% endif %}
+                          </li>
+                          <li>
+                            {% if question.correct_option == 4 %}
+                              D) <span class="text text-primary text-bold" style="font-weight: bolder;">{{ question.option_4 }}</span>
+                            {% else %}
+                              D) {{ question.option_4 }}
+                            {% endif %}
+                          </li>
+                    </ul>
+                </td>
+                <td><strong>Option {{ question.correct_option }}</strong></td>
+                <td>{{ question.correct_mark }} / {{ question.wrong_mark }}</td>
+                <td>
+                    <a href="{{ url_for('admin.admin_question_edit', question_id=question.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('admin.admin_question_delete', question_id=question.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+<script>
+    function searchQuestions() {
+    let searchInput = document.getElementById("searchBox").value.toLowerCase();
+    let rows = document.querySelectorAll("#questionsTable tr");
+
+    rows.forEach(row => {
+        let questionText = row.cells[2].textContent.toLowerCase();
+        let quizText = row.cells[1].textContent.toLowerCase();
+        let optionsText = row.cells[3].textContent.toLowerCase();
+        let correctAnswer = row.cells[4].textContent.toLowerCase();
+
+        if (
+            questionText.includes(searchInput) ||
+            quizText.includes(searchInput) ||
+            optionsText.includes(searchInput) ||
+            correctAnswer.includes(searchInput)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function filterQuestions() {
+    let selectedQuiz = document.getElementById("quizFilter").value;
+    let rows = document.querySelectorAll("#questionsTable tr");
+
+    rows.forEach(row => {
+        let quizID = row.getAttribute("data-quiz-id");
+        if (selectedQuiz === "" || quizID === selectedQuiz) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

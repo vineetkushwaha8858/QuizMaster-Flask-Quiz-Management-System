@@ -1,0 +1,58 @@
+{% extends 'user/base.html' %}
+
+{% block title %}Quizzes - User Dashboard{% endblock %}
+
+
+{% block styles %}
+<style>
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    background: #ffffff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">📚 Available Quizzes</h2>
+
+    <div class="row">
+        {% for quiz in quizzes %}
+        <div class="col-md-4">
+            <div class="card shadow-lg p-3 mb-4 rounded">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">{{ quiz.name }}</h4>
+                    <p class="text-muted">{{ quiz.description[:150] }}...</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-info text-dark">Questions: 
+                            {{ model_helper.get_questions_count(quiz.id) }}</span>
+                        <span class="badge bg-warning text-dark">Time: {{ quiz.time_duration }} min</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ url_for('user.user_quiz_info', quiz_id=quiz.id) }}" class="btn btn-outline-secondary btn-sm">More Details</a>
+                        {% if model_helper.get_questions_count(quiz.id)>0 %}
+                            <a href="{{ url_for('user.user_start_quiz', quiz_id=quiz.id) }}" class="btn btn-primary btn-sm">🚀 Start Quiz</a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
